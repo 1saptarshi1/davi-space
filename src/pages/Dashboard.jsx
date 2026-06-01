@@ -1,59 +1,100 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../modules/auth/auth.store'
-import { useTheme } from '../hooks/useTheme'
+import { getRandomMessage, getTimeGreeting } from '../lib/quotes'
+import styles from './Dashboard.module.css'
+
+const modules = [
+  {
+    icon: '📖',
+    title: 'mood journal',
+    desc: 'write how you feel today',
+    path: '/journal',
+    color: '#e8729a'
+  },
+  {
+    icon: '🎬',
+    title: 'media vault',
+    desc: 'reels, songs & things you love',
+    path: '/media',
+    color: '#7aaeed'
+  },
+  {
+    icon: '💌',
+    title: 'future letters',
+    desc: 'write to your future self',
+    path: '/letters',
+    color: '#a78bfa'
+  },
+  {
+    icon: '📸',
+    title: 'memory wall',
+    desc: 'photos & moments that matter',
+    path: '/memories',
+    color: '#f59e0b'
+  },
+]
 
 export default function Dashboard() {
   const user = useAuthStore(s => s.user)
-  const signOut = useAuthStore(s => s.signOut)
-  const { theme, setTheme, THEMES } = useTheme()
-
+  const navigate = useNavigate()
   const username = user?.user_metadata?.username || 'davi'
 
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'var(--color-bg)',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '20px',
-      padding: '40px 20px'
-    }}>
-      <h1 style={{ color: 'var(--color-primary)', fontSize: '2rem' }}>
-        welcome back, {username} 🌷
-      </h1>
-      <p style={{ color: 'var(--color-text-muted)' }}>
-        your space is ready ✨
-      </p>
+  const [message] = useState(getRandomMessage)
+  const [greeting] = useState(() => getTimeGreeting(username))
+  const [time, setTime] = useState(new Date())
 
-      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {THEMES.map(t => (
-          <button key={t} onClick={() => setTheme(t)} style={{
-            padding: '10px 20px',
-            borderRadius: '20px',
-            border: `2px solid ${theme === t ? 'var(--color-primary)' : 'var(--color-border)'}`,
-            background: theme === t ? 'var(--color-primary)' : 'var(--color-surface)',
-            color: theme === t ? 'white' : 'var(--color-text)',
-            cursor: 'pointer',
-            fontFamily: 'var(--font-main)',
-            fontWeight: 600
-          }}>{t}</button>
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 60000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const formattedDate = time.toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric'
+  })
+
+  return (
+    <div className={styles.page}>
+
+      {/* Welcome card */}
+      <div className={styles.welcomeCard}>
+        <div className={styles.welcomeLeft}>
+          <h1 className={styles.greeting}>{greeting}</h1>
+          <p className={styles.date}>{formattedDate}</p>
+          <p className={styles.comfortMsg}>✨ {message}</p>
+        </div>
+        <div className={styles.welcomeEmoji}>🌷</div>
+      </div>
+
+      {/* Section title */}
+      <div className={styles.sectionHeader}>
+        <h2 className={styles.sectionTitle}>your space</h2>
+        <p className={styles.sectionSub}>where do you want to go today?</p>
+      </div>
+
+      {/* Module cards */}
+      <div className={styles.grid}>
+        {modules.map(mod => (
+          <button
+            key={mod.path}
+            className={styles.moduleCard}
+            onClick={() => navigate(mod.path)}
+          >
+            <div
+              className={styles.moduleIcon}
+              style={{ background: mod.color + '22', color: mod.color }}
+            >
+              {mod.icon}
+            </div>
+            <div className={styles.moduleInfo}>
+              <h3 className={styles.moduleTitle}>{mod.title}</h3>
+              <p className={styles.moduleDesc}>{mod.desc}</p>
+            </div>
+            <span className={styles.moduleArrow}>→</span>
+          </button>
         ))}
       </div>
 
-      <button onClick={signOut} style={{
-        marginTop: '20px',
-        padding: '12px 28px',
-        borderRadius: '14px',
-        border: '1.5px solid var(--color-border)',
-        background: 'transparent',
-        color: 'var(--color-text-muted)',
-        cursor: 'pointer',
-        fontFamily: 'var(--font-main)',
-        fontSize: '0.9rem'
-      }}>
-        sign out
-      </button>
     </div>
   )
 }

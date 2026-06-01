@@ -1,0 +1,153 @@
+export const comfortMessages = [
+  "drink water, sleepy girl 🌷",
+  "you survived yesterday too ✨",
+  "today is a new page 📖",
+  "you're doing better than you think 🌙",
+  "small steps still count 🌷",
+  "rest is productive too ✨",
+  "your feelings are valid 🌷",
+  "one thing at a time 🌸",
+  "you are enough, always 💫",
+  "be gentle with yourself today 🌷",
+  "good things are coming 🌻",
+  "you make the world softer 🌷",
+  "it's okay to take breaks ☁️",
+  "proud of you for showing up ✨",
+  "your effort matters 🌷",
+  "breathe. you've got this 🌙",
+  "today counts, even the quiet parts 🌷",
+  "you are loved more than you know 💫",
+  "keep going, tulip 🌷",
+  "the world is better with you in it ✨",
+
+  "sleep properly tonight, okay? 😤🌙",
+  "don't let overthinking steal your peace 🌷",
+  "your smile deserves softer days ✨",
+  "you're someone's favorite notification 😭🌸",
+  "eat something before surviving the world 😔🌷",
+  "your heart deserves kindness too 💫",
+  "it's okay to disappear and recharge 🌙",
+  "you don't always have to be strong 🌷",
+  "you bring comfort without even trying ✨",
+  "slow mornings suit you 🌸",
+  "take your time, sleepy queen 😴",
+  "you look prettier when you're happy 🌷",
+  "don't carry the whole world today ☁️",
+  "the moon would probably like you 🌙",
+  "your existence feels soft ✨",
+  "you deserve calm love and warm blankets 🌸",
+  "today's mission: survive gently 😭🌷",
+  "your voice probably sounds peaceful at night 🌙",
+  "being sensitive is not weakness 🌷",
+  "i hope your mind feels lighter today ✨",
+
+  "one deep breath at a time 🌸",
+  "you're allowed to rest without guilt 🌷",
+  "you deserve flowers and soft music 🌻",
+  "please don't skip meals again 😤",
+  "sleepy girls deserve extra care 😴🌷",
+  "your energy feels comforting ✨",
+  "i hope today hugs you gently 🌸",
+  "your softness is your power 🌷",
+  "you're not behind in life 🌙",
+  "keep your pretty heart safe 💫",
+  "your bad days don't define you 🌧️",
+  "i know you're trying your best 🌷",
+  "you make ordinary days feel softer ✨",
+  "don't be too harsh on yourself today 🌸",
+  "your happiness matters too 🌷",
+  "rest your pretty mind tonight 🌙",
+  "you deserve peaceful sleep 😴",
+  "today feels calmer with you here 🌷",
+  "you're doing enough already 💫",
+  "you make warmth feel real 🌸",
+
+  "please protect your peace today 🌷",
+  "even stars need dark skies to shine 🌙",
+  "you deserve slow and safe love 🌸",
+  "the world feels quieter around you ✨",
+  "take care of your heart too 🌷",
+  "you're healing even when it feels slow 🌙",
+  "you don't need to rush life 🌸",
+  "somebody is proud of you today 💫",
+  "you are softer than rain 🌧️",
+  "let yourself breathe a little 🌷",
+  "you deserve comfort without conditions ✨",
+  "don't forget to stretch your sleepy body 😭",
+  "you make black outfits look dangerous 🖤",
+  "gentle souls deserve gentle days 🌸",
+  "your tiredness deserves rest, not guilt 🌙",
+  "i hope your playlist heals you today 🎧",
+  "you make night feel beautiful 🌌",
+  "your peace matters more than productivity 🌷",
+  "take things slowly today ☁️",
+  "your smile probably heals people 😭✨",
+
+  "another day of being adorable survived 🌷",
+  "you deserve forehead kisses and peace 😤🌸",
+  "i hope today feels less heavy 🌙",
+  "your eyes deserve proper sleep 😴",
+  "you make softness feel magical ✨",
+  "don't let one bad moment ruin your day 🌷",
+  "you are allowed to outgrow old sadness 🌸",
+  "you deserve people who stay gentle with you 🌙",
+  "take care of your sleepy brain 😭",
+  "the universe made something soft when it made you 🌷",
+  "your comfort matters here ✨",
+  "i hope your tea/coffee tastes extra good today ☕",
+  "the world needs more soft hearts like yours 🌸",
+  "your little efforts are seen 🌷",
+  "keep choosing yourself too 💫",
+  "you deserve peaceful late nights 🌙",
+  "you don't have to earn rest 🌷",
+  "protect your pretty energy today ✨",
+  "even quiet girls leave strong impressions 🌸",
+  "your happiness looks good on you 🌷",
+
+  "don't overthink tiny things tonight 🌙",
+  "you're allowed to have messy days 🌧️",
+  "your calmness feels addictive ✨",
+  "please sleep before 3am today 😭",
+  "you deserve warmth in every form 🌸",
+  "your existence feels comforting 🌷",
+  "soft hearts survive too 💫",
+  "you make ordinary moments feel special 🌙",
+  "take care of yourself for me? 🌷",
+  "you deserve slow dances and soft songs 🎶",
+  "the stars would choose you too ✨",
+  "you bring peace without realizing it 🌸",
+  "your smile belongs in peaceful places 🌷",
+  "some people are sunsets, you're moonlight 🌙",
+  "today is softer because you're here ✨",
+  "please be kind to yourself today 🌸",
+  "your energy feels like late night comfort 🌷",
+  "even your silence feels warm 💫",
+  "you deserve days that don't hurt 🌙",
+  "sleepy girl, the world is rooting for you 🌷"
+]
+
+export const getRandomMessage = () => {
+  return comfortMessages[Math.floor(Math.random() * comfortMessages.length)]
+}
+
+export const getTimeGreeting = (name = 'davi') => {
+  const hour = new Date().getHours()
+
+  if (hour < 5) {
+    return `still awake, ${name}? 🌙`
+  }
+
+  if (hour < 12) {
+    return `good morning, sleepy ${name} 🌷`
+  }
+
+  if (hour < 17) {
+    return `good afternoon, ${name} ✨`
+  }
+
+  if (hour < 21) {
+    return `good evening, ${name} 🌙`
+  }
+
+  return `sleepy hours, ${name} 😴`
+}
