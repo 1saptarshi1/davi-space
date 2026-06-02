@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard'
 
 import JournalPage from './modules/journal/index'
 import LettersPage from './modules/letters/index'
+import MemoryPage from './modules/memory/index'
 
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
@@ -64,7 +65,7 @@ function App() {
         } />
         <Route path="/memories" element={
           <ProtectedRoute>
-            <Layout><ComingSoon name="memory wall" /></Layout>
+            <Layout><MemoryPage /></Layout>
           </ProtectedRoute>
         } />
         <Route path="/themes" element={
