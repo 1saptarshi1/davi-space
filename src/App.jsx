@@ -13,6 +13,7 @@ import Dashboard from './pages/Dashboard'
 import JournalPage from './modules/journal/index'
 import LettersPage from './modules/letters/index'
 import MemoryPage from './modules/memory/index'
+import MediaPage from './modules/media/index'
 
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
@@ -55,7 +56,7 @@ function App() {
         } />
         <Route path="/media" element={
           <ProtectedRoute>
-            <Layout><ComingSoon name="media vault" /></Layout>
+            <Layout><MediaPage /></Layout>
           </ProtectedRoute>
         } />
         <Route path="/letters" element={
