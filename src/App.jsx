@@ -10,6 +10,8 @@ import LoginPage from './modules/auth/LoginPage'
 import SignupPage from './modules/auth/SignupPage'
 import Dashboard from './pages/Dashboard'
 
+import JournalPage from './modules/journal/index'
+
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
   <div style={{
@@ -46,7 +48,7 @@ function App() {
         } />
         <Route path="/journal" element={
           <ProtectedRoute>
-            <Layout><ComingSoon name="mood journal" /></Layout>
+            <Layout><JournalPage /></Layout>
           </ProtectedRoute>
         } />
         <Route path="/media" element={
