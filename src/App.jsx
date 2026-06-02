@@ -11,6 +11,7 @@ import SignupPage from './modules/auth/SignupPage'
 import Dashboard from './pages/Dashboard'
 
 import JournalPage from './modules/journal/index'
+import LettersPage from './modules/letters/index'
 
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
@@ -58,7 +59,7 @@ function App() {
         } />
         <Route path="/letters" element={
           <ProtectedRoute>
-            <Layout><ComingSoon name="future letters" /></Layout>
+            <Layout><LettersPage /></Layout>
           </ProtectedRoute>
         } />
         <Route path="/memories" element={
