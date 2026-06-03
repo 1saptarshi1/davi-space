@@ -29,3 +29,10 @@ body {
 *, *::before, *::after {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
+
+/* ── Custom Cursor per theme ── */
+[data-theme="tulip"] *        { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='72'%3E🌷%3C/text%3E%3C/svg%3E") 8 0, auto !important; }
+[data-theme="rainy"] *        { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='72'%3E💧%3C/text%3E%3C/svg%3E") 8 0, auto !important; }
+[data-theme="sleepy"] *       { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='72'%3E🌙%3C/text%3E%3C/svg%3E") 8 0, auto !important; }
+[data-theme="sunflower"] *    { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='72'%3E🌻%3C/text%3E%3C/svg%3E") 8 0, auto !important; }
+[data-theme="spiderman"] *    { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='72'%3E🕷️%3C/text%3E%3C/svg%3E") 8 0, auto !important; }
