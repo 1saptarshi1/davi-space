@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { useAuthStore } from '../modules/auth/auth.store'
 import { useTheme, THEMES } from '../hooks/useTheme'
+import Particles from './Particles'
+import PageTransition from './PageTransition'
 import styles from './Layout.module.css'
 
 const navItems = [
@@ -27,16 +30,17 @@ export default function Layout({ children }) {
 
   return (
     <div className={styles.root}>
+      {/* Floating particles */}
+      <Particles />
+
       {/* Sidebar */}
       <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
 
-        {/* Logo */}
         <div className={styles.logo} onClick={() => setCollapsed(!collapsed)}>
           <span className={styles.logoIcon}>🌷</span>
           {!collapsed && <span className={styles.logoText}>Davi Space</span>}
         </div>
 
-        {/* Nav items */}
         <nav className={styles.nav}>
           {navItems.map(item => (
             <button
@@ -50,7 +54,6 @@ export default function Layout({ children }) {
           ))}
         </nav>
 
-        {/* Theme switcher */}
         {!collapsed && (
           <div className={styles.themePicker}>
             <p className={styles.themeLabel}>theme</p>
@@ -69,7 +72,6 @@ export default function Layout({ children }) {
           </div>
         )}
 
-        {/* User + signout */}
         <div className={styles.userSection}>
           <div className={styles.avatar}>{initial}</div>
           {!collapsed && (
@@ -82,9 +84,13 @@ export default function Layout({ children }) {
 
       </aside>
 
-      {/* Main content */}
+      {/* Main content with page transitions */}
       <main className={styles.main}>
-        {children}
+        <AnimatePresence mode="wait">
+          <PageTransition key={location.pathname}>
+            {children}
+          </PageTransition>
+        </AnimatePresence>
       </main>
     </div>
   )

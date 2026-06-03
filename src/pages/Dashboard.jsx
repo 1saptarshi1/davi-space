@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../modules/auth/auth.store'
 import { getRandomMessage, getTimeGreeting } from '../lib/quotes'
 import styles from './Dashboard.module.css'
+import { motion } from 'framer-motion'
 
 const modules = [
   {
@@ -78,7 +79,12 @@ export default function Dashboard() {
     <div className={styles.page}>
 
       {/* Welcome card */}
-      <div className={styles.welcomeCard}>
+      <motion.div
+        className={styles.welcomeCard}
+        initial={{ opacity: 0, scale: 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+      >
         <div className={styles.welcomeLeft}>
           <h1 className={styles.greeting}>{greeting}</h1>
           <p className={styles.date}>{formattedDate}</p>
@@ -111,7 +117,7 @@ export default function Dashboard() {
           )}
         </div>
         <div className={styles.welcomeEmoji}>🌷</div>
-      </div>
+      </motion.div>
 
       {/* Section title */}
       <div className={styles.sectionHeader}>
@@ -121,11 +127,16 @@ export default function Dashboard() {
 
       {/* Module cards */}
       <div className={styles.grid}>
-        {modules.map(mod => (
-          <button
+        {modules.map((mod, index) => (
+          <motion.button
             key={mod.path}
             className={styles.moduleCard}
             onClick={() => navigate(mod.path)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1, duration: 0.4 }}
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
           >
             <div
               className={styles.moduleIcon}
@@ -138,7 +149,7 @@ export default function Dashboard() {
               <p className={styles.moduleDesc}>{mod.desc}</p>
             </div>
             <span className={styles.moduleArrow}>→</span>
-          </button>
+          </motion.button>
         ))}
       </div>
 

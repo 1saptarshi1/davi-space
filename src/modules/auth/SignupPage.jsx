@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuthStore } from './auth.store'
 import { useTheme, THEMES } from '../../hooks/useTheme'
 import styles from './auth.module.css'
+import { motion } from 'framer-motion'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -49,7 +50,12 @@ export default function SignupPage() {
         ))}
       </div>
 
-      <div className={styles.card}>
+      <motion.div
+        className={styles.card}
+        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+      >
         <div className={styles.header}>
           <span className={styles.logo}>🌷</span>
           <h1 className={styles.title}>Davi Space</h1>
@@ -110,7 +116,7 @@ export default function SignupPage() {
             enter here
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   )
 }

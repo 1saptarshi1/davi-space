@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useJournalStore } from './journal.store'
 import { MOODS } from './MoodPicker'
 import styles from './JournalCard.module.css'
+import { motion } from 'framer-motion'
 
 export default function JournalCard({ entry, onEdit }) {
   const deleteEntry = useJournalStore(s => s.deleteEntry)
@@ -19,7 +20,14 @@ export default function JournalCard({ entry, onEdit }) {
   }
 
   return (
-    <div className={styles.card} style={{ '--mood-color': mood?.color || 'var(--color-primary)' }}>
+    <motion.div
+      className={styles.card}
+      style={{ '--mood-color': mood?.color || 'var(--color-primary)' }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.25 }}
+    >
 
       {/* Mood tag */}
       <div className={styles.moodTag} style={{ background: (mood?.color || '#e8729a') + '22', color: mood?.color || 'var(--color-primary)' }}>
@@ -48,6 +56,6 @@ export default function JournalCard({ entry, onEdit }) {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

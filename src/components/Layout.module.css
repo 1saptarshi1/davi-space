@@ -196,3 +196,13 @@
   .userName, .signOut { display: none; }
   .main { padding: 20px 16px; }
 }
+
+.logoIcon {
+  font-size: 1.6rem;
+  animation: softPulse 3s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
