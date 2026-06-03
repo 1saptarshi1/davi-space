@@ -52,6 +52,27 @@ export default function Dashboard() {
   const formattedDate = time.toLocaleDateString('en-US', {
     weekday: 'long', month: 'long', day: 'numeric'
   })
+  const [installPrompt, setInstallPrompt] = useState(null)
+  const [installed, setInstalled] = useState(false)
+
+  useEffect(() => {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault()
+      setInstallPrompt(e)
+    })
+    window.addEventListener('appinstalled', () => {
+      setInstalled(true)
+      setInstallPrompt(null)
+    })
+  }, [])
+
+  const handleInstall = async () => {
+    if (!installPrompt) return
+    installPrompt.prompt()
+    const { outcome } = await installPrompt.userChoice
+    if (outcome === 'accepted') setInstalled(true)
+    setInstallPrompt(null)
+  }
 
   return (
     <div className={styles.page}>
@@ -62,6 +83,32 @@ export default function Dashboard() {
           <h1 className={styles.greeting}>{greeting}</h1>
           <p className={styles.date}>{formattedDate}</p>
           <p className={styles.comfortMsg}>✨ {message}</p>
+          {installPrompt && !installed && (
+            <button
+              onClick={handleInstall}
+              style={{
+                marginTop: '8px',
+                padding: '10px 20px',
+                borderRadius: '12px',
+                border: 'none',
+                background: 'var(--color-primary)',
+                color: 'white',
+                fontFamily: 'var(--font-main)',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                width: 'fit-content'
+              }}
+            >
+              📱 install app on phone
+            </button>
+          )}
+
+          {installed && (
+            <p style={{ color: 'var(--color-primary)', fontSize: '0.85rem', marginTop: '8px' }}>
+              ✨ app installed!
+            </p>
+          )}
         </div>
         <div className={styles.welcomeEmoji}>🌷</div>
       </div>

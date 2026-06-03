@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuthStore } from './auth.store'
-import { useTheme } from '../../hooks/useTheme'
+import { useTheme, THEMES } from '../../hooks/useTheme'
 import styles from './auth.module.css'
 
 export default function SignupPage() {
@@ -13,7 +13,7 @@ export default function SignupPage() {
 
   const signUp = useAuthStore(s => s.signUp)
   const navigate = useNavigate()
-  const { theme, setTheme, THEMES } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   const handleSignup = async (e) => {
     e.preventDefault()
@@ -40,11 +40,11 @@ export default function SignupPage() {
       <div className={styles.themeSwitcher}>
         {THEMES.map(t => (
           <button
-            key={t}
-            onClick={() => setTheme(t)}
-            className={`${styles.themeBtn} ${theme === t ? styles.themeBtnActive : ''}`}
+            key={t.key}
+            onClick={() => setTheme(t.key)}
+            className={`${styles.themeBtn} ${theme === t.key ? styles.themeBtnActive : ''}`}
           >
-            {t === 'tulip' ? '🌷' : t === 'rainy' ? '🌧' : t === 'sleepy' ? '🌙' : '🌻'}
+            {t.emoji}
           </button>
         ))}
       </div>

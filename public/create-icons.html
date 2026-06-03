@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="c192" width="192" height="192"></canvas>
+<canvas id="c512" width="512" height="512"></canvas>
+<script>
+function drawIcon(id, size) {
+  const canvas = document.getElementById(id)
+  const ctx = canvas.getContext('2d')
+  
+  // Background
+  ctx.fillStyle = '#fdf0f5'
+  ctx.beginPath()
+  ctx.roundRect(0, 0, size, size, size * 0.2)
+  ctx.fill()
+  
+  // Tulip emoji
+  ctx.font = `${size * 0.65}px serif`
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('🌷', size/2, size/2)
+  
+  // Download
+  const link = document.createElement('a')
+  link.download = id === 'c192' ? 'tulip-192.png' : 'tulip-512.png'
+  link.href = canvas.toDataURL()
+  link.click()
+}
+
+drawIcon('c192', 192)
+setTimeout(() => drawIcon('c512', 512), 500)
+</script>
+</body>
+</html>

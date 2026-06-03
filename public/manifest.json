@@ -1,0 +1,26 @@
+{
+  "name": "Davi Space",
+  "short_name": "Davi Space",
+  "description": "your little world 🌷",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf0f5",
+  "theme_color": "#d4547a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/tulip-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/tulip-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["lifestyle", "productivity"]
+}
