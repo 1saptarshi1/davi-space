@@ -16,6 +16,7 @@ import MemoryPage from './modules/memory/index'
 import MediaPage from './modules/media/index'
 
 import ThemePage from './modules/theme/index'
+import ProfilePage from './modules/profile/index'
 
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
@@ -74,6 +75,11 @@ function App() {
         <Route path="/themes" element={
           <ProtectedRoute>
             <Layout><ThemePage /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Layout><ProfilePage /></Layout>
           </ProtectedRoute>
         } />
 

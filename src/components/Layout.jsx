@@ -11,6 +11,7 @@ const navItems = [
   { icon: '💌', label: 'letters',  path: '/letters' },
   { icon: '📸', label: 'memories', path: '/memories' },
   { icon: '🎨', label: 'themes',   path: '/themes' },
+  { icon: '👤', label: 'profile',  path: '/profile' },
 ]
 
 export default function Layout({ children }) {
