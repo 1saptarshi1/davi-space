@@ -12,24 +12,24 @@
 
 /* ── Rainy Night 🌧 ── */
 [data-theme="rainy"] {
-  --color-bg: #080f1e;
-  --color-surface: #0f1c32;
-  --color-primary: #5a9fd4;
+  --color-bg: #060d1a;
+  --color-surface: #0c1628;
+  --color-primary: #4d9de0;
   --color-text: #c8dff5;
-  --color-text-muted: #5878a0;
-  --color-border: #1e3a5a;
+  --color-text-muted: #4a6a8a;
+  --color-border: #142236;
   --font-main: 'Nunito', sans-serif;
   --particle: '🌧';
 }
 
 /* ── Sleepy Moon 🌙 ── */
 [data-theme="sleepy"] {
-  --color-bg: #100e24;
-  --color-surface: #1a1738;
-  --color-primary: #9d7ff0;
-  --color-text: #ddd5f8;
-  --color-text-muted: #7060a8;
-  --color-border: #302860;
+  --color-bg: #09071a;
+  --color-surface: #110e2e;
+  --color-primary: #8b5cf6;
+  --color-text: #e2d9f3;
+  --color-text-muted: #4e3d7a;
+  --color-border: #1e1640;
   --font-main: 'Nunito', sans-serif;
   --particle: '🌙';
 }
@@ -44,4 +44,16 @@
   --color-border: #f5d76e;
   --font-main: 'Nunito', sans-serif;
   --particle: '🌻';
+}
+
+/* ── Spider-Man 🕷️ ── */
+[data-theme="spiderman"] {
+  --color-bg: #0a0a0a;
+  --color-surface: #1a0a0a;
+  --color-primary: #e63946;
+  --color-text: #f0f0f0;
+  --color-text-muted: #8a5a5a;
+  --color-border: #3a1010;
+  --font-main: 'Nunito', sans-serif;
+  --particle: '🕷️';
 }

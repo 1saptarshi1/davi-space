@@ -15,6 +15,8 @@ import LettersPage from './modules/letters/index'
 import MemoryPage from './modules/memory/index'
 import MediaPage from './modules/media/index'
 
+import ThemePage from './modules/theme/index'
+
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
   <div style={{
@@ -71,7 +73,7 @@ function App() {
         } />
         <Route path="/themes" element={
           <ProtectedRoute>
-            <Layout><ComingSoon name="themes" /></Layout>
+            <Layout><ThemePage /></Layout>
           </ProtectedRoute>
         } />
 
