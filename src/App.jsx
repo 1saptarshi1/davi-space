@@ -17,6 +17,7 @@ import MediaPage from './modules/media/index'
 
 import ThemePage from './modules/theme/index'
 import ProfilePage from './modules/profile/index'
+import WrappedPage from './modules/wrapped/index'
 
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
@@ -80,6 +81,11 @@ function App() {
         <Route path="/profile" element={
           <ProtectedRoute>
             <Layout><ProfilePage /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/wrapped" element={
+          <ProtectedRoute>
+            <Layout><WrappedPage /></Layout>
           </ProtectedRoute>
         } />
 

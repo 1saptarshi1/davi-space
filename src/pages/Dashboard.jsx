@@ -89,6 +89,24 @@ export default function Dashboard() {
           <h1 className={styles.greeting}>{greeting}</h1>
           <p className={styles.date}>{formattedDate}</p>
           <p className={styles.comfortMsg}>✨ {message}</p>
+          <button
+            onClick={() => navigate('/wrapped')}
+            style={{
+              marginTop: '8px',
+              padding: '8px 18px',
+              borderRadius: '20px',
+              border: '1.5px solid var(--color-primary)',
+              background: 'transparent',
+              color: 'var(--color-primary)',
+              fontFamily: 'var(--font-main)',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              width: 'fit-content'
+            }}
+          >
+            🎁 see your wrapped
+          </button>
           {installPrompt && !installed && (
             <button
               onClick={handleInstall}
