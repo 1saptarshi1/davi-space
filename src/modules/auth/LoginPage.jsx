@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuthStore } from './auth.store'
 import { useTheme, THEMES } from '../../hooks/useTheme'
+import { supabase } from '../../lib/supabase'
 import styles from './auth.module.css'
 import { motion } from 'framer-motion'
 
@@ -19,9 +20,7 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
     setLoading(true)
-
     const { error } = await signIn(email, password)
-
     if (error) {
       setError(error.message)
       setLoading(false)
@@ -30,7 +29,15 @@ export default function LoginPage() {
     }
   }
 
-  // greeting changes by time of day
+  const handleGoogle = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: 'https://davi-space.vercel.app/home'
+      }
+    })
+  }
+
   const getGreeting = () => {
     const hour = new Date().getHours()
     if (hour < 12) return 'good morning 🌷'
@@ -41,7 +48,6 @@ export default function LoginPage() {
 
   return (
     <div className={styles.page}>
-      {/* Theme switcher top right */}
       <div className={styles.themeSwitcher}>
         {THEMES.map(t => (
           <button
@@ -93,14 +99,21 @@ export default function LoginPage() {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button
-            type="submit"
-            className={styles.submitBtn}
-            disabled={loading}
-          >
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
             {loading ? 'entering your world...' : 'enter 🌷'}
           </button>
         </form>
+
+        {/* Divider */}
+        <div className={styles.divider}>
+          <span>or</span>
+        </div>
+
+        {/* Google button */}
+        <button onClick={handleGoogle} className={styles.googleBtn}>
+          <img src="https://www.google.com/favicon.ico" width="18" height="18" alt="google" />
+          continue with Google
+        </button>
 
         <p className={styles.switchText}>
           new here?{' '}
