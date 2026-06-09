@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuthStore } from '../auth/auth.store'
+import { useJournalStore } from '../journal/journal.store'
 import { updateProfile, fetchStats } from './profile.api'
 import { useTheme, THEMES } from '../../hooks/useTheme'
+import { calculateStreak, getStreakMessage } from '../../lib/streak'
 import styles from './profile.module.css'
 
 const AVATAR_EMOJIS = [
@@ -20,6 +22,7 @@ const MOOD_STATS = [
 export default function ProfilePage() {
   const user = useAuthStore(s => s.user)
   const { theme, setTheme } = useTheme()
+  const { entries, loadEntries } = useJournalStore()
 
   const [username, setUsername] = useState(user?.user_metadata?.username || '')
   const [avatar, setAvatar]     = useState(user?.user_metadata?.avatar || '🌷')
@@ -28,9 +31,13 @@ export default function ProfilePage() {
   const [saved, setSaved]       = useState(false)
   const [error, setError]       = useState('')
 
+  const streak = calculateStreak(entries)
+  const streakMsg = getStreakMessage(streak)
+
   useEffect(() => {
     if (user) {
       fetchStats(user.id).then(setStats)
+      loadEntries(user.id)
     }
   }, [user])
 
@@ -134,6 +141,28 @@ export default function ProfilePage() {
               <span className={styles.statLabel}>{s.label}</span>
             </div>
           ))}
+
+          {/* Streak stat */}
+          <div
+            className={styles.statCard}
+            style={{ '--stat-color': '#f59e0b' }}
+          >
+            <span className={styles.statIcon}>
+              {streak > 0 ? '🔥' : '💤'}
+            </span>
+            <span className={styles.statNum} style={{ color: '#f59e0b' }}>
+              {streak}
+            </span>
+            <span className={styles.statLabel}>day streak</span>
+            <span style={{
+              fontSize: '0.7rem',
+              color: 'var(--color-text-muted)',
+              textAlign: 'center',
+              marginTop: '2px'
+            }}>
+              {streakMsg}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -155,7 +184,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Danger zone */}
+      {/* Account */}
       <div className={styles.dangerSection}>
         <h2 className={styles.dangerTitle}>account</h2>
         <p className={styles.dangerText}>

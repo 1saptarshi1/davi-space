@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../modules/auth/auth.store'
+import { useJournalStore } from '../modules/journal/journal.store'
 import { getRandomMessage, getTimeGreeting } from '../lib/quotes'
+import { calculateStreak, getStreakMessage } from '../lib/streak'
 import styles from './Dashboard.module.css'
 import { motion } from 'framer-motion'
 
@@ -44,17 +46,21 @@ export default function Dashboard() {
   const [message] = useState(getRandomMessage)
   const [greeting] = useState(() => getTimeGreeting(username))
   const [time, setTime] = useState(new Date())
+  const [installPrompt, setInstallPrompt] = useState(null)
+  const [installed, setInstalled] = useState(false)
+
+  const { entries, loadEntries } = useJournalStore()
+  const streak = calculateStreak(entries)
+  const streakMsg = getStreakMessage(streak)
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 60000)
     return () => clearInterval(timer)
   }, [])
 
-  const formattedDate = time.toLocaleDateString('en-US', {
-    weekday: 'long', month: 'long', day: 'numeric'
-  })
-  const [installPrompt, setInstallPrompt] = useState(null)
-  const [installed, setInstalled] = useState(false)
+  useEffect(() => {
+    if (user) loadEntries(user.id)
+  }, [user])
 
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -75,6 +81,10 @@ export default function Dashboard() {
     setInstallPrompt(null)
   }
 
+  const formattedDate = time.toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric'
+  })
+
   return (
     <div className={styles.page}>
 
@@ -89,6 +99,7 @@ export default function Dashboard() {
           <h1 className={styles.greeting}>{greeting}</h1>
           <p className={styles.date}>{formattedDate}</p>
           <p className={styles.comfortMsg}>✨ {message}</p>
+
           <button
             onClick={() => navigate('/wrapped')}
             style={{
@@ -107,6 +118,7 @@ export default function Dashboard() {
           >
             🎁 see your wrapped
           </button>
+
           {installPrompt && !installed && (
             <button
               onClick={handleInstall}
@@ -135,6 +147,30 @@ export default function Dashboard() {
           )}
         </div>
         <div className={styles.welcomeEmoji}>🌷</div>
+      </motion.div>
+
+      {/* Streak card */}
+      <motion.div
+        className={styles.streakCard}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.4 }}
+      >
+        <div className={styles.streakLeft}>
+          <span className={styles.streakFire}>
+            {streak > 0 ? '🔥' : '💤'}
+          </span>
+          <div>
+            <p className={styles.streakNum}>{streak} day streak</p>
+            <p className={styles.streakMsg}>{streakMsg}</p>
+          </div>
+        </div>
+        <button
+          className={styles.streakBtn}
+          onClick={() => navigate('/journal')}
+        >
+          {streak > 0 ? 'keep it going →' : 'write today →'}
+        </button>
       </motion.div>
 
       {/* Section title */}

@@ -136,3 +136,59 @@
   .greeting { font-size: 1.4rem; }
   .welcomeEmoji { font-size: 3.5rem; }
 }
+
+/* Streak card */
+.streakCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid #f59e0b;
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.streakLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.streakFire {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.streakNum {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.streakMsg {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.streakBtn {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.streakBtn:hover {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
