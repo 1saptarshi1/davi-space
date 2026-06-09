@@ -39,5 +39,21 @@ export const useAuthStore = create((set) => ({
   signOut: async () => {
     await supabase.auth.signOut()
     set({ user: null })
-  }
+  },
+
+  // Send reset email
+resetPassword: async (email) => {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://davi-space.vercel.app/reset-password'
+  })
+  return { error }
+},
+
+// Update password after reset
+updatePassword: async (newPassword) => {
+  const { error } = await supabase.auth.updateUser({
+    password: newPassword
+  })
+  return { error }
+},
 }))

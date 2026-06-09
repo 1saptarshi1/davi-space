@@ -19,6 +19,9 @@ import ThemePage from './modules/theme/index'
 import ProfilePage from './modules/profile/index'
 import WrappedPage from './modules/wrapped/index'
 
+import ForgotPage from './modules/auth/ForgotPage'
+import ResetPage from './modules/auth/ResetPage'
+
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
   <div style={{
@@ -46,6 +49,8 @@ function App() {
       <Routes>
         <Route path="/login"  element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/forgot" element={<ForgotPage />} />
+        <Route path="/reset-password" element={<ResetPage />} />
 
         {/* All protected pages share Layout */}
         <Route path="/home" element={
