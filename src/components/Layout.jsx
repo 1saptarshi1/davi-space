@@ -17,6 +17,15 @@ const navItems = [
   { icon: '👤', label: 'profile',  path: '/profile' },
 ]
 
+// Only show 5 in bottom nav (most important)
+const bottomNavItems = [
+  { icon: '🏠', label: 'home',     path: '/home' },
+  { icon: '📖', label: 'journal',  path: '/journal' },
+  { icon: '📸', label: 'memories', path: '/memories' },
+  { icon: '💌', label: 'letters',  path: '/letters' },
+  { icon: '👤', label: 'profile',  path: '/profile' },
+]
+
 export default function Layout({ children }) {
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
@@ -26,14 +35,14 @@ export default function Layout({ children }) {
   const { theme, setTheme } = useTheme()
 
   const username = user?.user_metadata?.username || 'davi'
-  const initial = username[0].toUpperCase()
+  const photoUrl = user?.user_metadata?.avatar_url || null
+  const avatar = user?.user_metadata?.avatar || username[0].toUpperCase()
 
   return (
     <div className={styles.root}>
-      {/* Floating particles */}
       <Particles />
 
-      {/* Sidebar */}
+      {/* ── Desktop Sidebar ── */}
       <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
 
         <div className={styles.logo} onClick={() => setCollapsed(!collapsed)}>
@@ -73,22 +82,11 @@ export default function Layout({ children }) {
         )}
 
         <div className={styles.userSection}>
-          {/* Avatar — shows photo, google pic, or emoji */}
           <div className={styles.avatarWrap} onClick={() => navigate('/profile')}>
-            {user?.user_metadata?.avatar_url ? (
-              <img
-                src={user.user_metadata.avatar_url}
-                alt="avatar"
-                className={styles.avatarImg}
-              />
-            ) : user?.user_metadata?.avatar && user.user_metadata.avatar !== '🌷' ? (
-              <div className={styles.avatarEmoji}>
-                {user.user_metadata.avatar}
-              </div>
+            {photoUrl ? (
+              <img src={photoUrl} alt="avatar" className={styles.avatarImg} />
             ) : (
-              <div className={styles.avatarEmoji}>
-                {user?.user_metadata?.avatar || initial}
-              </div>
+              <div className={styles.avatarEmoji}>{avatar}</div>
             )}
           </div>
           {!collapsed && (
@@ -98,17 +96,48 @@ export default function Layout({ children }) {
             </div>
           )}
         </div>
-
       </aside>
 
-      {/* Main content with page transitions */}
+      {/* ── Main content ── */}
       <main className={styles.main}>
+
+        {/* Mobile top bar */}
+        <div className={styles.mobileHeader}>
+          <span className={styles.mobileLogo}>🌷</span>
+          <span className={styles.mobileTitle}>Davi Space</span>
+          <div
+            className={styles.avatarWrap}
+            onClick={() => navigate('/profile')}
+            style={{ width: '32px', height: '32px' }}
+          >
+            {photoUrl ? (
+              <img src={photoUrl} alt="avatar" className={styles.avatarImg} />
+            ) : (
+              <div className={styles.avatarEmoji} style={{ fontSize: '1rem' }}>{avatar}</div>
+            )}
+          </div>
+        </div>
+
         <AnimatePresence mode="wait">
           <PageTransition key={location.pathname}>
             {children}
           </PageTransition>
         </AnimatePresence>
       </main>
+
+      {/* ── Mobile Bottom Nav ── */}
+      <nav className={styles.bottomNav}>
+        {bottomNavItems.map(item => (
+          <button
+            key={item.path}
+            onClick={() => navigate(item.path)}
+            className={`${styles.bottomNavItem} ${location.pathname === item.path ? styles.bottomNavActive : ''}`}
+          >
+            <span className={styles.bottomNavIcon}>{item.icon}</span>
+            <span className={styles.bottomNavLabel}>{item.label}</span>
+          </button>
+        ))}
+      </nav>
     </div>
   )
 }
