@@ -73,7 +73,24 @@ export default function Layout({ children }) {
         )}
 
         <div className={styles.userSection}>
-          <div className={styles.avatar}>{initial}</div>
+          {/* Avatar — shows photo, google pic, or emoji */}
+          <div className={styles.avatarWrap} onClick={() => navigate('/profile')}>
+            {user?.user_metadata?.avatar_url ? (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="avatar"
+                className={styles.avatarImg}
+              />
+            ) : user?.user_metadata?.avatar && user.user_metadata.avatar !== '🌷' ? (
+              <div className={styles.avatarEmoji}>
+                {user.user_metadata.avatar}
+              </div>
+            ) : (
+              <div className={styles.avatarEmoji}>
+                {user?.user_metadata?.avatar || initial}
+              </div>
+            )}
+          </div>
           {!collapsed && (
             <div className={styles.userInfo}>
               <span className={styles.userName}>{username}</span>

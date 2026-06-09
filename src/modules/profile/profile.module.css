@@ -280,6 +280,27 @@
   color: #f87171;
 }
 
+.uploadBtn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+  display: block;
+  text-align: center;
+}
+
+.uploadBtn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
 /* Mobile */
 @media (max-width: 640px) {
   .profileCard { flex-direction: column; }

@@ -4,6 +4,7 @@ import { useJournalStore } from '../journal/journal.store'
 import { updateProfile, fetchStats } from './profile.api'
 import { useTheme, THEMES } from '../../hooks/useTheme'
 import { calculateStreak, getStreakMessage } from '../../lib/streak'
+import { supabase } from '../../lib/supabase'
 import styles from './profile.module.css'
 
 const AVATAR_EMOJIS = [
@@ -24,15 +25,19 @@ export default function ProfilePage() {
   const { theme, setTheme } = useTheme()
   const { entries, loadEntries } = useJournalStore()
 
-  const [username, setUsername] = useState(user?.user_metadata?.username || '')
-  const [avatar, setAvatar]     = useState(user?.user_metadata?.avatar || '🌷')
-  const [stats, setStats]       = useState(null)
-  const [saving, setSaving]     = useState(false)
-  const [saved, setSaved]       = useState(false)
-  const [error, setError]       = useState('')
+  const [username, setUsername]       = useState(user?.user_metadata?.username || '')
+  const [avatar, setAvatar]           = useState(user?.user_metadata?.avatar || '🌷')
+  const [stats, setStats]             = useState(null)
+  const [saving, setSaving]           = useState(false)
+  const [saved, setSaved]             = useState(false)
+  const [error, setError]             = useState('')
+  const [uploadingPhoto, setUploadingPhoto] = useState(false)
 
   const streak = calculateStreak(entries)
   const streakMsg = getStreakMessage(streak)
+
+  // Current photo URL — google pic or uploaded
+  const photoUrl = user?.user_metadata?.avatar_url || null
 
   useEffect(() => {
     if (user) {
@@ -45,9 +50,7 @@ export default function ProfilePage() {
     if (!username.trim()) { setError('name cannot be empty 🌷'); return }
     setSaving(true)
     setError('')
-
     const { error } = await updateProfile(user.id, { username, avatar })
-
     if (error) {
       setError(error.message)
     } else {
@@ -55,6 +58,58 @@ export default function ProfilePage() {
       setTimeout(() => setSaved(false), 2500)
     }
     setSaving(false)
+  }
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    if (file.size > 2 * 1024 * 1024) {
+      setError('photo must be under 2MB 🌷')
+      return
+    }
+
+    setUploadingPhoto(true)
+    setError('')
+
+    const ext = file.name.split('.').pop()
+    const path = `avatars/${user.id}.${ext}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('memories')
+      .upload(path, file, { upsert: true })
+
+    if (uploadError) {
+      setError(uploadError.message)
+      setUploadingPhoto(false)
+      return
+    }
+
+    const { data: urlData } = supabase.storage
+      .from('memories')
+      .getPublicUrl(path)
+
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: { avatar_url: urlData.publicUrl }
+    })
+
+    if (updateError) {
+      setError(updateError.message)
+    } else {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
+
+    setUploadingPhoto(false)
+  }
+
+  const handleRemovePhoto = async () => {
+    const { error } = await supabase.auth.updateUser({
+      data: { avatar_url: null }
+    })
+    if (!error) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
   }
 
   const currentTheme = THEMES.find(t => t.key === theme)
@@ -65,23 +120,82 @@ export default function ProfilePage() {
       {/* Profile card */}
       <div className={styles.profileCard}>
 
-        {/* Avatar */}
+        {/* Avatar section */}
         <div className={styles.avatarSection}>
-          <div className={styles.avatarBig}>{avatar}</div>
-          <div className={styles.avatarGrid}>
-            {AVATAR_EMOJIS.map(e => (
-              <button
-                key={e}
-                onClick={() => setAvatar(e)}
-                className={`${styles.emojiBtn} ${avatar === e ? styles.emojiActive : ''}`}
-              >
-                {e}
-              </button>
-            ))}
+
+          {/* Big avatar display */}
+          <div className={styles.avatarBig}>
+            {photoUrl ? (
+              <img
+                src={photoUrl}
+                alt="avatar"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '50%'
+                }}
+              />
+            ) : (
+              avatar
+            )}
           </div>
+
+          {/* Upload photo button */}
+          <label className={styles.uploadBtn}>
+            {uploadingPhoto ? 'uploading... ⏳' : '📷 upload photo'}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              style={{ display: 'none' }}
+            />
+          </label>
+
+          {/* Remove photo button — only show if photo exists */}
+          {photoUrl && (
+            <button
+              onClick={handleRemovePhoto}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--color-text-muted)',
+                fontSize: '0.75rem',
+                cursor: 'pointer',
+                fontFamily: 'var(--font-main)',
+                marginTop: '4px'
+              }}
+            >
+              remove photo
+            </button>
+          )}
+
+          {/* Emoji picker */}
+          {!photoUrl && (
+            <>
+              <p style={{
+                fontSize: '0.75rem',
+                color: 'var(--color-text-muted)',
+                marginTop: '8px'
+              }}>
+                or pick an emoji
+              </p>
+              <div className={styles.avatarGrid}>
+                {AVATAR_EMOJIS.map(e => (
+                  <button
+                    key={e}
+                    onClick={() => setAvatar(e)}
+                    className={`${styles.emojiBtn} ${avatar === e ? styles.emojiActive : ''}`}
+                  >
+                    {e}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
-        {/* Info */}
+        {/* Info section */}
         <div className={styles.infoSection}>
           <div className={styles.field}>
             <label className={styles.label}>your name</label>
