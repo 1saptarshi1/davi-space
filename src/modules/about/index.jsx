@@ -21,7 +21,7 @@ export default function AboutPage() {
           🌷
         </motion.div>
 
-        <h1 className={styles.title}>hey, davi 🌷</h1>
+        <h1 className={styles.title}>hey, davi ji 🌷</h1>
 
         <div className={styles.body}>
           <p>
@@ -45,7 +45,7 @@ export default function AboutPage() {
             and whenever you feel low, come back here.
           </p>
           <p className={styles.signature}>
-            — made with care, just for you ✨
+            — built one late night at a time, just for you 🌷
           </p>
         </div>
 
