@@ -1,16 +1,89 @@
-# React + Vite
+# 🌷 Davi Space
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal, emotional productivity space — built from scratch as a love letter in code.
 
-Currently, two official plugins are available:
+**Live:** [davi-space.vercel.app](https://davi-space.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🔐 **Authentication** — Email/password + Google OAuth, protected routes, password reset
+- 📖 **Mood Journal** — CRUD entries with mood tagging, search, filters, sort
+- 💌 **Future Letters** — Write letters to your future self with countdown unlock timers
+- 📸 **Memory Wall** — Photo uploads with captions, tags, favorites, lightbox view
+- 🎬 **Media Vault** — Save & embed YouTube, Spotify, Instagram links with auto-detection
+- 🎨 **5 Custom Themes** — Including a hidden Spider-Man theme, with per-theme particles & cursors
+- 🔥 **Streak System** — Daily journaling streak tracker
+- 🎁 **Davi Wrapped** — Spotify-Wrapped style yearly recap
+- 👤 **Profile** — Avatar upload, emoji picker, stats dashboard
+- 📱 **PWA** — Installable on mobile, works offline
+- 🥚 **Easter Eggs** — Hidden interactions and secret pages
+- ✨ **Animations** — Page transitions, floating particles, micro-interactions throughout
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- **Frontend:** React + Vite
+- **Styling:** CSS Modules + CSS Variables (theming)
+- **State:** Zustand
+- **Animations:** Framer Motion
+- **Backend:** Supabase (Auth, Postgres, Storage, RLS)
+- **Deployment:** Vercel
+
+---
+
+## 🏗️ Architecture
+
+```
+src/
+├── modules/          # Feature-based modules (journal, letters, memory, media, etc.)
+│   └── [feature]/
+│       ├── index.jsx
+│       ├── [feature].store.js
+│       ├── [feature].api.js
+│       └── *.module.css
+├── components/       # Shared components (Layout, ProtectedRoute, Particles)
+├── hooks/            # Custom hooks (useTheme, useCountdown, useKonami)
+├── lib/              # Utilities (supabase client, quotes, streak logic)
+├── pages/            # Top-level pages (Dashboard)
+└── styles/           # Global styles & theme definitions
+```
+
+Each feature module is self-contained: its own state, API calls, and components — making the codebase easy to navigate and extend.
+
+---
+
+## 🔒 Security
+
+- Row Level Security (RLS) enabled on all tables
+- Users can only access their own data (`auth.uid() = user_id`)
+- Storage policies restrict uploads/deletes to authenticated users
+
+---
+
+## 📱 Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Create a `.env` file in the root with:
+
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+---
+
+## 💌 Why This Exists
+
+Some apps are built to solve problems. This one was built for a person —
+a small, private space designed around comfort, reflection, and care.
+
+Every detail, from the tulip cursor to the random comfort messages,
+was a deliberate choice to make the app feel less like software
+and more like a little world.

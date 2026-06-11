@@ -181,6 +181,7 @@ export default function Layout({ children }) {
             initial={{ opacity: 0, y: 50, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.8 }}
+            onClick={() => { navigate('/about'); setShowSecret(false) }}
             style={{
               position: 'fixed',
               bottom: '90px',
@@ -196,10 +197,11 @@ export default function Layout({ children }) {
               zIndex: 999,
               boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
               textAlign: 'center',
-              whiteSpace: 'nowrap'
+              cursor: 'pointer',
+              maxWidth: '90vw'
             }}
           >
-            🌷 you found a secret! someone made this with love for you
+            🌷 you found a secret! tap here ✨
           </motion.div>
         )}
       </AnimatePresence>

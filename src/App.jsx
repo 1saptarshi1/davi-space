@@ -21,6 +21,7 @@ import WrappedPage from './modules/wrapped/index'
 
 import ForgotPage from './modules/auth/ForgotPage'
 import ResetPage from './modules/auth/ResetPage'
+import AboutPage from './modules/about/index'
 
 // Placeholder pages for future phases
 const ComingSoon = ({ name }) => (
@@ -91,6 +92,11 @@ function App() {
         <Route path="/wrapped" element={
           <ProtectedRoute>
             <Layout><WrappedPage /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/about" element={
+          <ProtectedRoute>
+            <Layout><AboutPage /></Layout>
           </ProtectedRoute>
         } />
 
