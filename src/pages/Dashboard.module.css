@@ -192,3 +192,8 @@
   border-color: #f59e0b;
   color: #f59e0b;
 }
+
+.welcomeCard {
+  position: relative;
+  /* ...existing styles */
+}

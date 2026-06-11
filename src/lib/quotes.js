@@ -132,22 +132,10 @@ export const getRandomMessage = () => {
 
 export const getTimeGreeting = (name = 'davi') => {
   const hour = new Date().getHours()
-
-  if (hour < 5) {
-    return `still awake, ${name}? 🌙`
-  }
-
-  if (hour < 12) {
-    return `good morning, sleepy ${name} 🌷`
-  }
-
-  if (hour < 17) {
-    return `good afternoon, ${name} ✨`
-  }
-
-  if (hour < 21) {
-    return `good evening, ${name} 🌙`
-  }
-
+  if (hour >= 0 && hour < 4) return `it's really late, ${name}... go sleep 😴🌙`
+  if (hour < 5)  return `still awake, ${name}? 🌙`
+  if (hour < 12) return `good morning, ${name} 🌷`
+  if (hour < 17) return `good afternoon, ${name} ✨`
+  if (hour < 21) return `good evening, ${name} 🌙`
   return `sleepy hours, ${name} 😴`
 }
